@@ -89,3 +89,4 @@ class TestCaseResult(models.Model):
     stdout = models.TextField(blank=True, default="")
     stderr = models.TextField(blank=True, default="")
     exit_code = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)

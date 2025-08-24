@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     "account.apps.AccountConfig",
     "api.apps.ApiConfig",
     "judge.apps.JudgeConfig",
-    "problem.apps.ProblemConfig",
 ]
 
 MIDDLEWARE = [
