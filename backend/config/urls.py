@@ -23,6 +23,7 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+from judge import views
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -53,5 +54,6 @@ urlpatterns = [
     # path("api/", include("account.urls")),
     path("api/auth/", include("dj_rest_auth.urls")),
     path("api/auth/registration/", include("dj_rest_auth.registration.urls")),
+    path("judge/<int:problem_id>/", views.run_judge, name="run_judge"),
 ]
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

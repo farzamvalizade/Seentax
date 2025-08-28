@@ -13,16 +13,17 @@ def dockerfile_upload_path(instance, filename):
 
 
 class VerdictChoices(models.TextChoices):
-    accepted = ("Accepted", "AC")
-    wrong_answer = ("Wrong Answer", "WA")
-    time_limit_exceeded = ("Time Limit Exceeded", "TLE")
-    memory_limit_exceeded = ("Memory Limit Exceeded", "MLE")
-    runtime_error = ("Runtime Error", "RE")
-    compile_error = ("Compile Error", "CE")
+    accepted = ("AC", "Accepted")
+    wrong_answer = ("WA", "Wrong Answer")
+    time_limit_exceeded = ("TLE", "Time Limit Exceeded")
+    memory_limit_exceeded = ("MLE", "Memory Limit Exceeded")
+    runtime_error = ("RE", "Runtime Error")
+    compile_error = ("CE", "Compile Error")
+
 
 
 class ProgrammingLanguage(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=128)
     dockerfile_path = models.FileField(upload_to=dockerfile_upload_path)
     run_command = models.CharField(max_length=256)
     compile_command = models.CharField(max_length=256, blank=True, default="")
@@ -40,11 +41,11 @@ class Problem(models.Model):
         normal = ("Normal", "Normal")
         hard = ("Hard", "Hard")
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=128)
     description = models.TextField()
     difficulty = models.CharField(max_length=16, choices=DifficultyChoices.choices)
     languages = models.ManyToManyField(ProgrammingLanguage)
-    input_format = models.TextField(max_length=128)
+    input_format = models.TextField(max_length=128, blank=True, default="")
     output_format = models.TextField(max_length=128)
     memory_limit_kb = models.IntegerField(default=256000)
     time_limit_ms = models.IntegerField(default=1000)
@@ -75,7 +76,7 @@ class Submission(models.Model):
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     language = models.ForeignKey(ProgrammingLanguage, on_delete=models.CASCADE)
     source_code = models.TextField()
-    status = models.CharField(max_length=16, choices=StatusChoices.choices)
+    status = models.CharField(max_length=32, choices=StatusChoices.choices)
     verdict = models.CharField(max_length=32, choices=VerdictChoices.choices)
     created_at = models.DateTimeField(auto_now_add=True)
 
