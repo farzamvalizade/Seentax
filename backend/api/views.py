@@ -4,6 +4,9 @@ from rest_framework import status
 from rest_framework import permissions
 
 from judge.models import Problem
+from account.models import User
+
+from .serializers import ProfileSerializers
 
 # Create your views here.
 
@@ -15,7 +18,7 @@ class ProblemCountAPIView(APIView):
 
 
 class ProfileAPIView(generics.RetrieveAPIView):
-    serializer_class = UserSerializer
+    serializer_class = ProfileSerializers
     permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self):
