@@ -27,13 +27,16 @@ class RunJudgeAPIView(APIView):
         if not language_id or not source_code:
             return Response(
                 {"error": "language_id and source_code are required"},
-                status=status.HTTP_400_BAD_REQUEST,
+                status=status.HTTP_400_BAD_REQUEST
             )
 
         try:
             language = ProgrammingLanguage.objects.get(id=language_id)
         except ProgrammingLanguage.DoesNotExist:
-            return Response({"error": "Language not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({
+                "error": "Language not found"},
+                status=status.HTTP_404_NOT_FOUND
+            )
 
         submission = Submission.objects.create(
             user=request.user,
