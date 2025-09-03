@@ -1,7 +1,14 @@
+from django.contrib.auth import get_user_model
+from django.db import transaction
+
 from celery import shared_task
-from judge.models import Submission, TestCase, TestCaseResult
+from django.db.models import F
+
+from judge.models import Submission, TestCase, TestCaseResult, Problem, ScoreAward
 from judge.core.docker_pool import DockerPool
 from judge.core.executor import CodeExecutor
+
+User = get_user_model()
 
 language_pools = {}
 
@@ -12,6 +19,16 @@ def get_pool(language):
             image=f"judge-{language.name.lower().replace(" ", "_")}", pool_size=2
         )
     return language_pools[language.name]
+
+
+def get_points_for_problem(problem: Problem) -> int:
+    if problem.difficulty == Problem.DifficultyChoices.easy:
+        return 10
+    elif problem.difficulty == Problem.DifficultyChoices.normal:
+        return 20
+    elif problem.difficulty == Problem.DifficultyChoices.hard:
+        return 30
+    return 0
 
 
 @shared_task
@@ -75,3 +92,16 @@ def evaluate_submission(submission_id):
     submission.save()
 
     pool.release(container)
+
+    if final_verdict == "AC":
+        points = get_points_for_problem(problem)
+        user = submission.user
+
+        with transaction.atomic():
+            award, created = ScoreAward.objects.get_or_create(
+                user=user,
+                problem=problem,
+                defaults={"points": points},
+            )
+            if created:
+                User.objects.filter(id=user.id).update(point=F("point") + points)

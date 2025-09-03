@@ -143,3 +143,15 @@ class TestCaseResult(models.Model):
 
     def __str__(self):
         return f"{self.submission.problem} -->  {self.verdict}"
+
+
+class ScoreAward(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    points = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["user", "problem"], name="unique_user_problem")
+        ]
