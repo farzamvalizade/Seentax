@@ -1,9 +1,9 @@
 import os
 
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.db import models
 
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 
 
 def dockerfile_upload_path(instance, filename):
@@ -30,7 +30,7 @@ class ProgrammingLanguage(models.Model):
     compile_command = models.CharField(
         max_length=256, blank=True, default="", verbose_name="دستور کامپایل"
     )
-    need_compile = models.BooleanField(default=False, verbose_name="کامپایل نیاز دارد؟")
+    need_compile = models.BooleanField(default=False, verbose_name="به کامپایل نیاز دارد؟")
     extension = models.CharField(
         max_length=128, blank=True, default="", verbose_name="پسوند"
     )
@@ -69,7 +69,7 @@ class Problem(models.Model):
 
     class Meta:
         verbose_name = "سوال"
-        verbose_name_plural = "سوال‌ها"
+        verbose_name_plural = "سوالات"
 
     def __str__(self):
         return self.name

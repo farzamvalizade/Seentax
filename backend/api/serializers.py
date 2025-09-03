@@ -1,9 +1,10 @@
+from django.contrib.auth import get_user_model
+
 from rest_framework import serializers
 
-from account.models import User, PointLog
 from judge.models import Problem, ProgrammingLanguage
 
-# Create Your Serializers Here
+User = get_user_model()
 
 
 class ProfileSerializers(serializers.ModelSerializer):

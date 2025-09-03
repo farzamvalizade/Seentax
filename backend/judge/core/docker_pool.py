@@ -4,7 +4,7 @@ from docker import DockerClient
 
 
 class DockerPool:
-    def __init__(self, image, pool_size=10, max_age=10):
+    def __init__(self, image, pool_size=10, max_age=1800):
         self.client = DockerClient.from_env()
         self.image = image
         self.pool = queue.Queue(maxsize=pool_size)

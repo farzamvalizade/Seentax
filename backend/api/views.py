@@ -1,5 +1,4 @@
-from django.utils.timezone import now, timedelta
-from django.db.models import Sum
+from django.contrib.auth import get_user_model
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -7,7 +6,6 @@ from rest_framework import generics
 from rest_framework import status
 from rest_framework import permissions
 
-from account.models import User, PointLog
 from judge.models import Problem, ProgrammingLanguage
 
 from .serializers import (
@@ -16,7 +14,7 @@ from .serializers import (
     ProgrammingLanguageSerializer,
 )
 
-# Create your views here.
+User = get_user_model()
 
 
 class ProfileAPIView(generics.RetrieveAPIView):
@@ -61,20 +59,6 @@ class LeaderboardView(APIView):
                 "leaderboard": list(top_users),
             }
         )
-
-
-class WeeklyTopUsersView(generics.GenericAPIView):
-    permission_classes = [permissions.AllowAny]
-
-    def get(self, request, *args, **kwargs):
-        week_ago = now() - timedelta(days=7)
-        top_users = (
-            PointLog.objects.filter(created_at__gte=week_ago)
-            .values("user__id", "user__username")
-            .annotate(points_gained=Sum("new_point") - Sum("old_point"))
-            .order_by("-points_gained")[:10]
-        )
-        return Response(top_users)
 
 
 class ProgrammingLanguageList(generics.ListAPIView):

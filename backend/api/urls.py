@@ -5,7 +5,6 @@ from .views import (
     ProblemCountAPIView,
     LeaderboardView,
     UserRankView,
-    WeeklyTopUsersView,
 )
 
 urlpatterns = [
@@ -16,8 +15,5 @@ urlpatterns = [
         "leaderboard/user-rank/",
         UserRankView.as_view(),
         name="leaderboard-user-rank",
-    ),
-    path(
-        "leaderboard/weekly/", WeeklyTopUsersView.as_view(), name="leaderboard-weekly"
     ),
 ]
