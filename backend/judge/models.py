@@ -87,6 +87,9 @@ class TestCase(models.Model):
         verbose_name = "تست کیس"
         verbose_name_plural = "تست کیس‌ها"
 
+    def __str__(self):
+        return self.problem.name
+
 
 class Submission(models.Model):
     class StatusChoices(models.TextChoices):
@@ -113,6 +116,9 @@ class Submission(models.Model):
         verbose_name = "ارسال"
         verbose_name_plural = "ارسال‌ها"
 
+    def __str__(self):
+        return f"{self.user} --> {self.problem.name}"
+
 
 class TestCaseResult(models.Model):
     submission = models.ForeignKey(
@@ -128,9 +134,12 @@ class TestCaseResult(models.Model):
     memory_kb = models.IntegerField(default=0, verbose_name="مموری")
     stdout = models.TextField(blank=True, default="", verbose_name="خروجی استاندارد")
     stderr = models.TextField(blank=True, default="", verbose_name="استاندارد ارور")
-    exit_code = models.IntegerField(default=0, verbose_name="کد حطا")
+    exit_code = models.IntegerField(default=0, verbose_name="کد خطا")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ ایجاد")
 
     class Meta:
         verbose_name = "نتیحه تست کیس"
         verbose_name_plural = "نتایج تست کیس‌ها"
+
+    def __str__(self):
+        return f"{self.submission.problem} -->  {self.verdict}"

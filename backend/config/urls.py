@@ -52,6 +52,6 @@ urlpatterns = [
     ),
     path("api/", include("account.urls")),
     path("api/", include("api.urls")),
-    path("judge/<int:problem_id>/", views.run_judge, name="run_judge"),
+    path("judge/<int:problem_id>/", views.RunJudgeAPIView.as_view(), name="run_judge"),
 ]
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
