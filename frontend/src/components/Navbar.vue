@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="fixed top-0 left-0 w-full z-50 bg-black text-white flex items-center justify-between px-6 py-3 border-b border-white/10"
+    class="fixed top-0 left-0 w-full z-50 bg-black opacity-95 text-white flex items-center justify-between px-6 py-3 border-b border-white/10"
   >
     <!-- Logo + Name -->
     <div>
@@ -8,14 +8,12 @@
         to="/"
         class="flex items-center gap-2 cursor-pointer select-none mx-auto"
       >
-<!--        <motion.div :animate="logoAnimate" :transition="logoTransition">-->
-<!--          <img src="../assets/logo.svg" alt="Logo" class="w-6 h-6" />-->
-<!--        </motion.div>-->
-        <img src="../assets/logo.svg" alt="Logo" class="w-6 h-6" />
+        <motion.div :animate="logoAnimate" :transition="logoTransition">
+          <img src="../assets/logo.svg" alt="Logo" class="w-6 h-6" />
+        </motion.div>
         <p class="font-bold text-lg tracking-tight">Seentax</p>
       </RouterLink>
     </div>
-
 
     <!-- Links -->
     <div class="flex gap-6 text-sm font-medium">
@@ -153,29 +151,6 @@
 <script setup lang="ts">
 import { motion } from "motion-v";
 import { RouterLink } from "vue-router";
-
-type Link = { to: string; label: string; icon: any };
-
-const HomeIcon = {
-  name: "HomeIcon",
-};
-
-const ProblemIcon = {
-  template: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-	<path fill="currentColor" d="M4 13c.55 0 1-.45 1-1s-.45-1-1-1s-1 .45-1 1s.45 1 1 1m0 4c.55 0 1-.45 1-1s-.45-1-1-1s-1 .45-1 1s.45 1 1 1m0-8c.55 0 1-.45 1-1s-.45-1-1-1s-1 .45-1 1s.45 1 1 1m4 4h12c.55 0 1-.45 1-1s-.45-1-1-1H8c-.55 0-1 .45-1 1s.45 1 1 1m0 4h12c.55 0 1-.45 1-1s-.45-1-1-1H8c-.55 0-1 .45-1 1s.45 1 1 1M7 8c0 .55.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1H8c-.55 0-1 .45-1 1m-3 5c.55 0 1-.45 1-1s-.45-1-1-1s-1 .45-1 1s.45 1 1 1m0 4c.55 0 1-.45 1-1s-.45-1-1-1s-1 .45-1 1s.45 1 1 1m0-8c.55 0 1-.45 1-1s-.45-1-1-1s-1 .45-1 1s.45 1 1 1m4 4h12c.55 0 1-.45 1-1s-.45-1-1-1H8c-.55 0-1 .45-1 1s.45 1 1 1m0 4h12c.55 0 1-.45 1-1s-.45-1-1-1H8c-.55 0-1 .45-1 1s.45 1 1 1M7 8c0 .55.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1H8c-.55 0-1 .45-1 1" />
-</svg>`,
-};
-const LeaderboardIcon = {
-  template: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-	<path fill="currentColor" d="M5.09 10.121A5.25 5.25 0 0 1 1 5V3.75C1 2.784 1.784 2 2.75 2h2.364c.236-.586.81-1 1.48-1h10.812c.67 0 1.244.414 1.48 1h2.489c.966 0 1.75.784 1.75 1.75V5a5.25 5.25 0 0 1-4.219 5.149a7.01 7.01 0 0 1-4.644 5.478l.231 3.003l.034.031c.079.065.303.203.836.282c.838.124 1.637.81 1.637 1.807v.75h2.25a.75.75 0 0 1 0 1.5H4.75a.75.75 0 0 1 0-1.5H7v-.75c0-.996.8-1.683 1.637-1.807c.533-.08.757-.217.836-.282l.034-.031l.231-3.003A7.01 7.01 0 0 1 5.09 10.12ZM6.5 2.594V9a5.5 5.5 0 1 0 11 0V2.594a.094.094 0 0 0-.094-.094H6.594a.094.094 0 0 0-.094.094m4.717 13.363l-.215 2.793l-.001.021l-.003.043a1 1 0 0 1-.022.147c-.05.237-.194.567-.553.86c-.348.286-.853.5-1.566.605a.48.48 0 0 0-.274.136a.26.26 0 0 0-.083.188v.75h7v-.75a.26.26 0 0 0-.083-.188a.48.48 0 0 0-.274-.136c-.713-.105-1.218-.32-1.567-.604c-.358-.294-.502-.624-.552-.86a1 1 0 0 1-.025-.19l-.001-.022l-.215-2.793a7 7 0 0 1-1.566 0M19 8.578A3.75 3.75 0 0 0 21.625 5V3.75a.25.25 0 0 0-.25-.25H19ZM5 3.5H2.75a.25.25 0 0 0-.25.25V5A3.75 3.75 0 0 0 5 8.537Z" />
-</svg>`,
-};
-
-const links: Link[] = [
-  { to: "/", label: "خانه", icon: HomeIcon },
-  { to: "/problems", label: "مسائل", icon: ProblemIcon },
-  { to: "/leaderboard", label: "جدول امتیازات", icon: LeaderboardIcon },
-];
 
 const logoAnimate = { rotate: 360, scale: [1, 1.1, 1] };
 const logoTransition = { repeat: Infinity, duration: 15, ease: "linear" };
